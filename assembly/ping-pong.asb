@@ -1,0 +1,126 @@
+# Repeat 17 times
+17
+loop0:
+dup 0
+jnz do_loop0
+drop
+jump end_loop0
+do_loop0:
+1
+sub
+
+# Repeat 42 times
+42
+loop1:
+dup 0
+jnz do_loop1
+drop
+jump end_loop1
+do_loop1:
+1
+sub
+
+# Repeat 1000 times
+1000
+loop2:
+dup 0
+jnz do_loop2
+drop
+jump end_loop2
+do_loop2:
+1
+sub
+
+# Build list of 1000 numbers
+0
+1
+loop3:
+dup 0
+1000
+gt
+jnz end_loop3
+dup 1
+cons
+cons
+tl
+dup 0
+hd
+1
+add
+jump loop3
+end_loop3:
+drop
+
+# Check list
+1000
+dup 1
+cons
+cons
+tl
+loop4:
+dup 0
+hd
+dup 0
+jnz more
+jump end_loop4
+more:
+dup 1
+tl
+hd
+ne
+jnz check_error
+tl
+dup 0
+hd
+1
+sub
+dup 1
+tl
+cons
+cons
+tl
+jump loop4
+end_loop4:
+drop
+tl
+jnz check_error
+
+# End inner loop
+jump loop2
+end_loop2:
+
+# Progress bar
+'.'
+output
+
+# End outer loop
+jump loop1
+end_loop1:
+
+# End line and stop
+'$'
+output
+'\n'
+output
+
+# End very outer loop
+jump loop0
+end_loop0:
+
+# Stop
+clock
+halt
+
+# Error
+check_error:
+"Error: something wrong with cons cells!\n"
+print_error:
+dup 0
+jnz do_print_error
+drop
+jump end_print_error
+do_print_error:
+output
+jump print_error
+end_print_error:
+halt
